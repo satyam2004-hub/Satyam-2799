@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home | Ecommerce</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #74ebd5, #ACB6E5);
+            color: #333;
+            padding: 2rem;
+            text-align: center;
+        }
+        h1 {
+            animation: fadeIn 2s ease-in-out;
+            font-size: 2.5rem;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 2rem;
+        }
+        li {
+            background-color: white;
+            margin: 0.5rem auto;
+            padding: 1rem;
+            width: 60%;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+        li:hover {
+            transform: scale(1.05);
+            background-color: #e0f7fa;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        #greeting {
+            margin-top: 2rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    {% if name %}
+        <h1>Welcome to the Home Page, {{ name }}!</h1>
+    {% else %}
+        <h1>This is a home page created by Some Author</h1>
+    {% endif %}
+
+    <ul>
+        <li onclick="goTo('/admin')">Go to Admin</li>
+        <li onclick="goTo('/ecommerce/home')">Go to Ecommerce Home</li>
+    </ul>
+
+    <div id="greeting"></div>
+
+    <script>
+        // Dynamic greeting based on time
+        const greeting = document.getElementById('greeting');
+        const hour = new Date().getHours();
+        let message = "Have a great day!";
+
+        if (hour < 12) {
+            message = "Good morning!";
+        } else if (hour < 18) {
+            message = "Good afternoon!";
+        } else {
+            message = "Good evening!";
+        }
+
+        greeting.innerText = message;
+
+        // Navigation handler
+        function goTo(path) {
+            window.location.href = path;
+        }
+    </script>
+</body>
+</html>
+
