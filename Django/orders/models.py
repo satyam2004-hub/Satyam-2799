@@ -1,26 +1,22 @@
-from asyncio.base_futures import _PENDING
 from django.db import models
+from django.contrib.auth.models import User
+from product.models import Product
 
-# Create your models here.
-
-class order(models.Model):
-    order_id=models.AutoField(primary_key=True)
-    order_name=models.CharField(max_length=100)
-    user_id=models.IntegerField()
-    placed_at=models.DateTimeField(auto_now_add=True)
-
-    PAYMENT_STATUS_CHOICE =[
-        ('PENDING','pending')
-        ('FAILED','failed')
-        ('PAID','paid')
-        ('REFUNDED','refunded')
+class Order(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField()
+    order_date = models.DateTimeField(auto_now_add=True)
+    
+    STATUS_CHOICES = [
+        ('Pending', 'Pending'),
+        ('Processing', 'Processing'),
+        ('Shipped', 'Shipped'),
+        ('Delivered', 'Delivered'),
+        ('Cancelled', 'Cancelled'),
     ]
-    payment_status=models.CharField(
-        max_length=10,
-        choices=PAYMENT_STATUS_CHOICE,
-        default='PENDING'
-    )
-    def _str_(self):
-        return f"Order{self.order_id} by User {self.user_id}"
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Pending')
 
-   
+    def __str__(self):
+        return f"Order {self.id} - {self.user.username} - {self.product.name}"
+

@@ -16,11 +16,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from users import urls
 
 from ecommerce import urls as ecommerce_urls
 import ecommerce
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('ecommerce/', include(ecommerce.urls)),
+    path('ecommerce/', include('ecommerce.urls')),
+    path('api/v1/', include('users.urls')),
+    path('api/v2/', include('cart.urls')), 
+    path('api/v3/', include('product.urls')),
+    path('api/v4/payment/', include('payment.urls')),
+    path('api/v5/orders/', include('orders.urls')),
 ]
